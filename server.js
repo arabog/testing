@@ -25,20 +25,14 @@ app.get('/', async (req, res)=>{
 	try {		
 		await db.collection('zuri').find().toArray() 
 
-		res.render('index.html')
+		res.render('index.ejs')
 	} catch (err) {
 		res.status(500).json(err)
 	}
 })
 
-app.post('/', (req, res) => {
-	db.collection('zuri').insertOne(
-		{
-			userFirstname: req.body.userFirstname,
-			userLastname: req.body.userLastname,
-			userEmail: req.body.userEmail,
-		}
-	)
+app.post('/post', (req, res) => {
+	db.collection('zuri').insertOne(req.body)
 		.then(result => {
 			res.redirect('/')
 		})
